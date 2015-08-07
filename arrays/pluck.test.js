@@ -15,5 +15,8 @@ var children = [
 ];
 
 children
-    .take(10, function(x){ return x.sex == 'f';})
-    .each(function(x){ console.log(x.name); });
+    .pluck('name')
+    .each(function (x) {
+        console.log(x);
+    });
+

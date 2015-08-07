@@ -14,6 +14,9 @@ var children = [
     {name: 'martin', sex: 'm'}
 ];
 
-children
-    .take(10, function(x){ return x.sex == 'f';})
-    .each(function(x){ console.log(x.name); });
+console.log(children.count() + ' children');
+console.log(children.count(function (x) {
+        return x.sex === 'f';
+    }) + ' are female');
+
+

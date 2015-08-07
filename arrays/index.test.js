@@ -14,6 +14,11 @@ var children = [
     {name: 'martin', sex: 'm'}
 ];
 
-children
-    .take(10, function(x){ return x.sex == 'f';})
-    .each(function(x){ console.log(x.name); });
+console.log(children.index(function (x) {
+    return x.name == 'bany';
+}));
+console.log(children.index(function (x) {
+    return x.name == 'mark';
+}));
+console.log([1, 3, 5, 7, 9, 11].index(7));
+

@@ -15,5 +15,8 @@ var children = [
 ];
 
 children
-    .take(10, function(x){ return x.sex == 'f';})
-    .each(function(x){ console.log(x.name); });
+    .skip(3)
+    .each(function (x) {
+        console.log(x.name);
+    });
+

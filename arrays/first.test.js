@@ -14,6 +14,8 @@ var children = [
     {name: 'martin', sex: 'm'}
 ];
 
-children
-    .take(10, function(x){ return x.sex == 'f';})
-    .each(function(x){ console.log(x.name); });
+console.log(children.first().name);
+console.log(children.first(function (x) {
+    return x.sex == 'm';
+}).name);
+

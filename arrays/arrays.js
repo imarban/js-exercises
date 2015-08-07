@@ -53,3 +53,91 @@ Array.prototype.take = function (howMany, spec) {
     return results.slice(0, howMany);
 
 };
+
+//slice
+Array.prototype.skip = function (howMany) {
+    return this.slice(howMany);
+};
+
+Array.prototype.first = function (spec) {
+    var results = spec ? this.where(spec) : this;
+    return results ? results[0] : null;
+};
+
+Array.prototype.last = function (spec) {
+    var results = spec ? this.where(spec) : this;
+    return results ? results[results.length - 1] : null;
+};
+
+Array.prototype.index = function (spec) {
+    for (var i = 0; i < this.length; i++) {
+        if (typeof spec == 'function') {
+            if (spec.call(this, this[i])) {
+                return i;
+            }
+        }
+        else {
+            if (spec === this[i]) {
+                return i;
+            }
+        }
+    }
+    return -1;
+};
+
+
+Array.prototype.pluck = function (property) {
+    return this.map(function (item) {
+        return item[property];
+    })
+};
+
+
+Array.prototype.sum = function (spec) {
+    var sum = 0;
+    for (var i = 0; i < this.length; i++) {
+        if (typeof spec == 'function') {
+            sum += spec.call(this, this[i])
+        }
+        else {
+            sum += this[i]
+        }
+    }
+    return sum;
+};
+
+sort = function (spec) {
+    if (!this.length) {
+        return [];
+    }
+
+    return typeof spec == 'function' ? this.sort(spec) : this.sort(function (a, b) {
+        return a - b;
+    });
+};
+
+Array.prototype.max = function (spec) {
+    return sort.call(this, spec)[this.length - 1] || null;
+};
+
+Array.prototype.min = function (spec) {
+    return sort.call(this, spec)[0] || null;
+};
+
+Array.prototype.flatten = function () {
+    var result = [];
+
+    var flat = function (arr) {
+        for (var i = 0; i < arr.length; i++) {
+            if (Array.isArray(arr[i])) {
+                flat(arr[i]);
+            } else {
+                result.push(arr[i]);
+            }
+        }
+    };
+
+    flat(this);
+
+    return result;
+};

@@ -1,6 +1,7 @@
 /**
  * Created by igomez on 8/7/15.
  */
+
 Array.prototype.each = function (callback) {
     for (var i = 0; i < this.length; i++) {
         callback.call(this, this[i], i);
@@ -61,12 +62,16 @@ Array.prototype.skip = function (howMany) {
 
 Array.prototype.first = function (spec) {
     var results = spec ? this.where(spec) : this;
-    return results ? results[0] : null;
+    return results.length ? results[0] : null;
 };
 
 Array.prototype.last = function (spec) {
     var results = spec ? this.where(spec) : this;
-    return results ? results[results.length - 1] : null;
+    return results.length ? results[results.length - 1] : null;
+};
+
+Array.prototype.count = function (spec) {
+    return spec ? this.where(spec).length : this.length;
 };
 
 Array.prototype.index = function (spec) {
@@ -92,17 +97,16 @@ Array.prototype.pluck = function (property) {
     })
 };
 
-
 Array.prototype.sum = function (spec) {
-    var sum = 0;
-    for (var i = 0; i < this.length; i++) {
-        if (typeof spec == 'function') {
-            sum += spec.call(this, this[i])
+    for (var i = 0, sum = 0; i < this.length; i++) {
+        if (spec instanceof Function) {
+            sum += spec.call(this, this[i]);
         }
         else {
-            sum += this[i]
+            sum += isNaN(this[i]) ? this[i].toString() : this[i];
         }
     }
+    console.log(sum);
     return sum;
 };
 
@@ -131,7 +135,7 @@ Array.prototype.flatten = function () {
         for (var i = 0; i < arr.length; i++) {
             if (Array.isArray(arr[i])) {
                 flat(arr[i]);
-            } else {
+            } else if (arr[i] !== undefined) {
                 result.push(arr[i]);
             }
         }
@@ -139,5 +143,5 @@ Array.prototype.flatten = function () {
 
     flat(this);
 
-    return result;
+    return result.length ? result : null;
 };

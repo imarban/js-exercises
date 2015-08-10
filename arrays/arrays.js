@@ -98,15 +98,19 @@ Array.prototype.pluck = function (property) {
 };
 
 Array.prototype.sum = function (spec) {
-    for (var i = 0, sum = 0; i < this.length; i++) {
+    if (!this.length) {
+        return null;
+    }
+
+    var sum = spec instanceof Function ? spec.call(this, this[0]) : this[0];
+    for (var i = 1; i < this.length; i++) {
         if (spec instanceof Function) {
             sum += spec.call(this, this[i]);
         }
         else {
-            sum += isNaN(this[i]) ? this[i].toString() : this[i];
+            sum += this[i];
         }
     }
-    console.log(sum);
     return sum;
 };
 

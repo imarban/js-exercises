@@ -474,6 +474,13 @@ describe("Array Extensions", function () {
             expect(actual).to.deep.equal('[object Object][object Object]');
         });
 
+        it("Sums with empty array", function () {
+            var children = [];
+            var actual = children.sum();
+
+            expect(actual).to.deep.equal(null);
+        });
+
 
     });
 

@@ -17,18 +17,25 @@ const DECORATORS = {
 };
 
 var applyDecorators = function (property) {
-    for (var i = 0; i < this.decoratorStack.length; i++) {
+
+    var toApply = [];
+
+    for (var i = this.decoratorStack.length - 1; i >= 0; i--) {
         if (this.decoratorStack[i].type === DECORATORS.WRAP) {
-            concat.call(this, this.decoratorStack[i][property]);
+            toApply.push(this.decoratorStack[i][property]);
+        } else {
+            break;
         }
     }
+
+    return property == 'prefix' ? toApply.reverse() : toApply;
 };
 
 StringBuilder.prototype.cat = function () {
     if (arguments && argumentsToArray(arguments).flatten() != null) {
-        applyDecorators.call(this, 'prefix');
+        concat.call(this, applyDecorators.call(this, 'prefix'));
         concat.apply(this, arguments);
-        applyDecorators.call(this, 'suffix');
+        concat.call(this, applyDecorators.call(this, 'suffix'));
     }
 
     return this;
@@ -76,7 +83,7 @@ StringBuilder.prototype.string = function () {
 StringBuilder.prototype.catIf = function () {
     for (var i = 0; i < arguments.length - 1; i++) {
         if (arguments[arguments.length - 1]) {
-            this.cat(arguments[i])
+            this.cat(arguments[i]);
         }
     }
     return this;
@@ -135,6 +142,7 @@ StringBuilder.prototype.when = function (expression, thenArgs, otherwiseArgs) {
 
 StringBuilder.prototype.end = function (deep) {
     deep = deep || 1;
+
     for (var i = 0; i < deep; i++) {
         this.decoratorStack.pop();
     }

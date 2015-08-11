@@ -519,6 +519,11 @@ describe("Array Extensions", function () {
 
             expect(actual).to.equal('pedro');
         });
+
+        it("Max with empty array", function () {
+            var actual = [].max();
+            expect(actual).to.equal(null);
+        });
     });
 
     // min function tests
@@ -555,9 +560,14 @@ describe("Array Extensions", function () {
 
             expect(actual).to.equal('juan');
         });
+
+        it("Min with empty array", function () {
+            var actual = [].min();
+            expect(actual).to.equal(null);
+        });
     });
 
-    // min function tests
+    // flatten function tests
     describe("flatten", function () {
 
         it("flattening ", function () {

@@ -2,6 +2,7 @@
  * Created by igomez on 8/7/15.
  */
 
+
 Array.prototype.each = function (callback) {
     for (var i = 0; i < this.length; i++) {
         callback.call(this, this[i], i);
@@ -104,12 +105,7 @@ Array.prototype.sum = function (spec) {
 
     var sum = spec instanceof Function ? spec.call(this, this[0]) : this[0];
     for (var i = 1; i < this.length; i++) {
-        if (spec instanceof Function) {
-            sum += spec.call(this, this[i]);
-        }
-        else {
-            sum += this[i];
-        }
+        sum += spec instanceof Function ? spec.call(this, this[i]) : this[i];
     }
     return sum;
 };

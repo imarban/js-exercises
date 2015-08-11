@@ -89,6 +89,21 @@ describe("String Builder", function () {
 
             expect(sb.string()).to.equal('Mom, I love love');
         });
+
+        it("Sending a parameter only", function () {
+            var sb = new StringBuilder();
+            sb.cat('Mom, I').rep('love');
+
+            expect(sb.string()).to.equal('Mom, I');
+        });
+
+        it("No parameters", function () {
+            var sb = new StringBuilder();
+            sb.cat('Mom, I').rep();
+
+            expect(sb.string()).to.equal('Mom, I');
+        });
+
     });
 
     describe('catIf. Concatenating strings if a condition is satisfied', function () {
@@ -120,6 +135,19 @@ describe("String Builder", function () {
             expect(sb.string()).to.equal('Hello');
         });
 
+        it("No parameters", function () {
+            var sb = new StringBuilder();
+
+            sb.cat('Hello').catIf();
+
+            expect(sb.string()).to.equal('Hello');
+        });
+
+        it("No condition", function () {
+            var sb = new StringBuilder();
+            sb.cat('Hello').catIf();
+            expect(sb.string()).to.equal('Hello');
+        });
     });
 
 
